@@ -180,12 +180,3 @@ html, body {
   background: black;
   color: white;
 }
-
-.overlay-show-pop {
-  opacity: 0; 
-  transition: opacity 0.5s ease-in-out;
-}
-
-.overlay-show-pop.show {
-  opacity: 1;
-}

@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate , useLocation } from 'react-router-dom';
 import "./Gamepage.css";
 
-const PopWinner = () => {
+const PopWinner = ({ isOpen }) => {
   const navigate = useNavigate();
+  if(!isOpen) return null;
+
   return (
     <div className="pop-up-overlay">
       <div className="pop-up-winner">
@@ -21,15 +23,16 @@ const PopWinner = () => {
 
 const Gamepage = () => {
   const navigate = useNavigate();
-  const [selectedImages, setSelectedImages] = useState([]);
   const location = useLocation();
+  const [selectedImages, setSelectedImages] = useState([]);
   const queryParams = new URLSearchParams(location.search);
   const initialRound = parseInt(queryParams.get("round"), 10) || 0;
   const [roundall, setRoundAll] = useState(initialRound);
   const [round, setRound] = useState(1);
 
+  const [popup, setPopup] = useState({ type: null, isOpen: false });
+
   const openPopup = (type) => setPopup({ type, isOpen: true });
-  const closePopup = () => setPopup({ type: null, isOpen: false });
 
   const [imageLinks, setImageLinks] = useState([
     "https://promotions.co.th/wp-content/uploads/2025/01/nvidia-rtx-5090.jpg",
@@ -65,8 +68,8 @@ const Gamepage = () => {
           setImageLinks(shuffledImages);
           setRound(1);  // รีเซ็ตจำนวนรอบเริ่มต้น
   
-          const totalRounds = Math.pow(2, Math.floor(Math.log2(shuffledImages.length || 2)));
-          setRoundAll(totalRounds);  // อัปเดตค่าของ roundall
+          const totalRounds = Math.ceil(Math.log2(shuffledImages.length));
+          setRoundAll(totalRounds + 1);
         } else {
           setImageLinks(["src/img/Return.png"]);
         }
@@ -84,10 +87,8 @@ const Gamepage = () => {
       const remainingImages = imageLinks.slice(2);
       setImageLinks(shuffleArray(remainingImages));
     }
-
     setRound(round + 1);
   };
-
 
   return (
   
@@ -138,17 +139,18 @@ const Gamepage = () => {
         </div>
       )}
 
-
       {imageLinks.length === 1 && (
         <div className="winner-container">
           <h2>1st Winner!</h2>
           <img src={imageLinks[0]} alt="Winner" style={{ width: "550px", height: "400px" }}/>
-          <h2  onClick={() => Pup} style={{ cursor: "pointer" }}>FINISH</h2>
+          <h2 onClick={() => openPopup("Finish")} style={{ cursor: "pointer" }}>FINISH</h2>
         </div>
       )}
+
+      {popup.type === "Finish" && <PopWinner isOpen={popup.isOpen} />}
+
   </div>
   );
 };
-
 
 export default Gamepage;
