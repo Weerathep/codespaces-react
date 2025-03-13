@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Homepage.css";
 import { useNavigate , useLocation } from 'react-router-dom';
 
-const PopupModal = ({ isOpen, onClose }) => {
+const PopupModal = ({ isOpen, onClose, category }) => {
     const navigate = useNavigate();
     if (!isOpen) return null;
     return (
@@ -16,9 +16,9 @@ const PopupModal = ({ isOpen, onClose }) => {
                 </div>
                 <h2 className="titan-text" style={{ fontSize: "3rem" }}>Choose</h2>
                 <h2 className="titan-text" style={{ fontSize: "1.5rem" }}>Picture</h2>
-                <button className="option-btn" onClick={() => navigate("/gamepage?round=32")}>32 pic.</button>
-                <button className="option-btn" onClick={() => navigate("/gamepage?round=64")}>64 pic.</button>
-                <button className="option-btn" onClick={() => navigate("/gamepage?round=128")}>128 pic.</button>
+                <button className="option-btn" onClick={() => navigate(`/gamepage?round=32&category=${category}`)}>32 pic.</button>
+                <button className="option-btn" onClick={() => navigate(`/gamepage?round=64&category=${category}`)}>64 pic.</button>
+                <button className="option-btn" onClick={() => navigate(`/gamepage?round=128&category=${category}`)}>128 pic.</button>
             </div>
         </div>
     );
@@ -84,9 +84,9 @@ const HomePage = () => {
     const queryParams = new URLSearchParams(location.search);
     const category = queryParams.get("category");
 
-    const [popup, setPopup] = useState({ type: null, isOpen: false });
+    const [popup, setPopup] = useState({ type: null, isOpen: false, category: null });
 
-    const openPopup = (type) => setPopup({ type, isOpen: true });
+    const openPopup = (type , category) => setPopup({ type, isOpen: true, category });
     const closePopup = () => setPopup({ type: null, isOpen: false });
 
     const Content = ({ Title, image, alt, category }) => (
@@ -103,7 +103,7 @@ const HomePage = () => {
         </h4>
         {/* Connect with Back_End */} 
         <img src={image} alt={alt} className="image" />
-        <button className="play" onClick={() => openPopup("Play")} style={{ cursor: "pointer" }}>PLAY</button>
+        <button className="play" onClick={() => openPopup("Play", category)} style={{ cursor: "pointer" }}>PLAY</button>
         </div>
     );
 
@@ -185,7 +185,7 @@ const HomePage = () => {
                     )}
                 </section>
             </main>
-            {popup.type === "Play" && <PopupModal isOpen={popup.isOpen} onClose={closePopup} />}
+            {popup.type === "Play" && <PopupModal isOpen={popup.isOpen} onClose={closePopup} category={popup.category} />}
             {popup.type === "Login" && <LoginModal isOpen={popup.isOpen} onClose={closePopup} />}
             {popup.type === "Signin" && <SigninModal isOpen={popup.isOpen} onClose={closePopup} />}
         </div>
