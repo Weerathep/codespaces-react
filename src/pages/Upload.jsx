@@ -58,6 +58,7 @@ const Upload = () => {
     "⚽SPORTS",
     "🍔FOODS",
     "⏳LATEST",
+    "🎬MOVIES"
   ]);
 
   // อัปโหลด Thumbnail
@@ -208,7 +209,7 @@ const Upload = () => {
          <input
           type="text"
           className="image-caption"
-          placeholder="Enter caption"
+          placeholder="Enter Name"
           value={image.caption}
           onChange={(e) => handleCaptionChange(image.id, e.target.value)}
         />

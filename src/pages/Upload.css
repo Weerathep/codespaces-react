@@ -173,6 +173,24 @@
   color: white;
 }
 
+.image-caption {
+  border-radius: 20px;
+  width: 300px;
+  height: 20px;
+}
+
+.remove-btn {
+  margin-top: 5px;
+  width: 50px;
+  height: 27px;
+  color: white;
+  background: rgb(255, 0, 0); 
+  border-radius: 20px;
+  margin-left: 5px;
+  border: 2px solid Red;
+  cursor: pointer;
+}
+
 .confirm-btn:hover,
 .cancel-btn:hover {
   opacity: 0.8;

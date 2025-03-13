@@ -125,11 +125,11 @@ const Gamepage = () => {
               style={{ border: "10px solid #33FF00", width: "450px", height: "400px" }}
               onClick={() => handleSelect(imageLinks[0])}
             />
-            <p style={{ fontFamily: "Jost, sans-serif", fontSize: "20px", fontWeight: "500" }} >RTX 5090</p> {/* ข้อความใต้รูป */}
+            <p style={{ fontFamily: "Jost, sans-serif", fontSize: "20px", fontWeight: "500" }} >{name}</p> {/* ข้อความใต้รูป */}
           </div>
           <div className="vs-container">
             <img
-              style={{ marginTop: "50px" }}
+              style={{ marginTop: "50px", width: "200px"}}
               src="src/img/Vs.png"
               className="no-hover h2"
               alt="VS"
